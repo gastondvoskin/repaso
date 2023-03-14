@@ -1,0 +1,21 @@
+API
+mkdir api
+npm init -y
+
+git init
+
+npm i express nodemon morgan axios sequelize pg-hstore dotenv
+archivo index.js
+package.json. quitar test. agregar script "start": "nodemon index.js" npm start
+
+dentro de api: mkdir src, archivo app.js
+Copiar Hello world exemple de la documentación, modularizarlo. 
+app.js: requerir express, inicializar, exportar. 
+index.js: requerir app, escuchar. 
+Middlewares en app.js: morgan. Middleware hace que la request pase por lo que hay dentro del .use. next() hace que la request continúe su camino hasta llegar al endpoint. 
+
+dentro de src, mkdir routes y mkdir controllers
+Si las rutas estuvieran en el mismo archivo que app, no haría falta el middleware enrutador. 
+Al pasar las rutas a otro archivo, agregar middleware Router requerido de Express. const mainRouter = require("./routes/index.js");
+Al tener distintos tipos de peticiones, nuevamente modularizar cada ruta, con el middleware Router. 
+Hacer rutas con NIY (Not implemented yet).

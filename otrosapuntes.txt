@@ -1,0 +1,2 @@
+mv nombreArchivo nuevoPath
+touch nombreArchivo
