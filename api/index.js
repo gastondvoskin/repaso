@@ -2,9 +2,10 @@
 
 const app = require("./src/app.js");
 
-const port = 3000;
+const { sequelize } = require("./src/db");
 
-
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
+app.listen(3000, () => {
+  // sequelize.sync({force: true});
+  sequelize.sync({alter: true});
+  console.log(`Listening on port 3000`);
 })

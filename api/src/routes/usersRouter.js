@@ -1,21 +1,15 @@
 const { Router } = require("express");
-
 usersRouter = Router();
-
+const { getUsersHandler, getUserByIdHandler, createUserHandler } = require("../handlers/usersHandlers");
 
 // rutas de users
-usersRouter.get("/", (req, res) => {
-    res.status(200).send("NIY: Esta ruta trae la info de todos los usuarios");
-});
+// comentado porque luego se modularizó
+// usersRouter.get("/", (req, res) => {
+//     res.status(200).send("NIY: Esta ruta trae la info de todos los usuarios");
+// });
 
-usersRouter.get("/:id", (req, res) => {
-    res.status(200).send("NIY: Esta ruta trae la info de un usuario buscado por id");
-});
-
-usersRouter.post("/", (req, res) => {
-    res.status(200).send("NIY: Esta ruta crea un usuario");
-});
-
-
+usersRouter.get("/", getUsersHandler);
+usersRouter.get("/:id", getUserByIdHandler);
+usersRouter.post("/", createUserHandler);
 
 module.exports = usersRouter;
