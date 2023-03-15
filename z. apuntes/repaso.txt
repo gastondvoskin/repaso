@@ -1,0 +1,83 @@
+----------------------------------------------------------------------------------------
+1ra clase
+
+API
+mkdir api
+npm init -y
+
+git init
+
+npm i express nodemon morgan 
+npm i axios 
+npm i sequelize pg pg-hstore 
+npm i dotenv
+archivo index.js
+package.json. quitar test. agregar script "start": "nodemon index.js" npm start
+
+dentro de api: mkdir src, archivo app.js
+Copiar Hello world exemple de la documentación, modularizarlo. 
+app.js: requerir express, inicializar, exportar. 
+index.js: requerir app, escuchar. 
+Middlewares en app.js: morgan. Middleware hace que la request pase por lo que hay dentro del .use. next() hace que la request continúe su camino hasta llegar al endpoint. 
+
+dentro de src, mkdir routes y mkdir controllers
+Si las rutas estuvieran en el mismo archivo que app, no haría falta el middleware enrutador. 
+Al pasar las rutas a otro archivo, agregar middleware Router requerido de Express. const mainRouter = require("./routes/index.js");
+Al tener distintos tipos de peticiones, nuevamente modularizar cada ruta, con el middleware Router. 
+Hacer rutas con NIY (Not implemented yet).
+
+----------------------------------------------------------------------------------------
+2da clase
+
+nodemon. Con sólo requerir desde un archivo que tiene el watcher de nodemon, el archivo al cual se requiere también pasa a estar observado por nodemon y funcionan los console.log() en ambos.  
+
+el endpoint contiene al handler (así lo define la documentación de Express). el controller es ejecutado por el handler. El handler no interactúa con la DB ni con la API, ya que es responsabilidad del controller. 
+Modularizar el handler (no sólo el controller): carpeta handlers en src. 
+
+Crear peticiones en Postman y guardarlas en una colección. 
+req.params.nombreParams /:nombreParams
+req.query.nombreQuery ?nombreQuery=valorQuery
+const { prop1, prop2 } = req.body;  agregar middleware en archivo app para que el json se convierta a js. app.use(express.json()); en vez de usar body.json se puede usar body.parser, que es lo que se usaba antes. 
+
+DB
+src\db.js conectar a base de datos (documentación Getting started de Sequelize): una vez creada la DB desde SQL Shell, requerir Sequelize, instanciar Sequelize con segundo argumento {logging: false} 
+Agregar archivo .env (variables de entorno) con credenciales. Requerir dotenv en db.js y ejecutar su método config . Desestructurar credenciales de process.env. 
+Agregar .env al gitignore
+A la instancia de Sequelize ejecutarle el método .define() para definir los modelos, exportar. en apo\index.js requerir y sync dentro del app.listen: sequelize.sync({force: true});  más adelante alter:true
+
+La instancia de Sequelize guarda en su propiedad models los modelos definidos con el método .define()
+Desestructurar modelos. const { User, Post } = sequelize.models; User y Post sí son los modelos, a diferencia de las funciones guardadas en User.js y Post.js que sirven para definir modelos. 
+Agregar al module.exports ...sequelize.models . Requerir el modelo correspondiente en el archivo controller (no requerirlo en el handler, porque el handler no tiene que relacionarse de manera directa con la DB).
+Para agregar registros, método .create() de cada modelo. 
+
+sql Shell. 
+Documentación para comandos en SQL: w3school
+sql shell CREATE DATABASE nombreDB; \l \c nombreDB \dt
+SELECT * FROM "Users"; (usar comillas dobles por la mayúscula en la U)
+
+Definir modelos. 
+sequelize.define("nombreModelo", {
+    nombreAtributoColumna: {
+        type: Datatypes.tipoDeDato,
+        primaryKey: true,
+        constraint (como allowNull): false
+    }
+})
+Para modularizar modelos, crear carpeta models a la altura de db.js (dentro de carpeta src). Crear un archivo para cada modelo, por ejemplo User.js . Cada archivo contiene una función con un parámetro. En User.js y en cada modelo importar Datatypes. 
+Exportar la función que define el modelo e importarla en db.js. En db.js ejecutar la función pasándole como argumento la instancia de Sequelize. 
+
+Relacionar modelos
+Documentación: Sequelize Associations. 
+Al relacionar 1:n, en la tabla a la que corresponde n se crea automáticamente la columna con la FK. 
+
+Archivos controller.
+exportar función. importarla en el handler. 
+la función va a ser async await porque maneja una promesa (hay una demora en la consulta a la DB).  
+
+Archivo handlers. 
+Desestructurar params, query o body. 
+Agregar try catch. 
+Ejecutar controller y guardar lo que retorna. 
+Enviar respuesta para ambos casos. 
+createUserHandler pasa también a ser una función async (agregarle el async await)
+Los métodos de los modelos retornan promesas. 

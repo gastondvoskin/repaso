@@ -1,0 +1,5 @@
+- Cómo abrir archivo o carpeta desde VSC con la terminal? 
+- Cómo crear archivo desde VSC? 
+- endpoints === rutas del backend? Qué es URI?
+- Por qué algunos objetos pueden tener en su último valor una coma final y otros no? Por ejemplo en sequelize.define se admite coma final
+- Por qué en sequelize indico el nombre User para el modelo y Postgres lo convierte a Users (en plural) ?

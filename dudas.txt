@@ -1,3 +1,0 @@
-- Cómo abrir archivo o carpeta desde VSC con la terminal? 
-- Cómo crear archivo desde VSC? 
-- endpoints === rutas del backend? Qué es URI?
